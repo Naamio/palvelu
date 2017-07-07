@@ -1,0 +1,64 @@
+variables:
+  DOCKER_DRIVER: overlay
+
+stages:
+  - test
+  - build
+  - deploy
+
+build:linux:
+  image: ibmcom/swift-ubuntu:4.0.3
+  stage: build
+  before_script:
+    # install ssh-agent
+    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+
+    # run ssh-agent
+    - eval $(ssh-agent -s)
+
+    # add ssh key stored in SSH_PRIVATE_KEY variable to the agent store
+    - ssh-add <(echo "$SSH_PRIVATE_KEY")
+
+    # disable host key checking (NOTE: makes you susceptible to man-in-the-middle attacks)
+    # WARNING: use only in docker container, if you use it with shell you will overwrite your user's ssh config
+    - mkdir -p ~/.ssh
+    - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+  script:
+    - echo "Building release artifact"
+    - swift build -c release -Xcc -fblocks -Xlinker -L/usr/local/lib
+  artifacts:
+    paths:
+    - .build/release/*
+    expire_in: 1 week
+  tags:
+    - docker
+  only:
+    - schedules
+    - master
+    - release
+
+review:
+  image: ibmcom/swift-ubuntu:4.0.3
+  stage: test
+  script:
+    - echo "Reviewing $CI_PROJECT_NAME"
+    - make build
+    - make test
+  only:
+    - branches
+  except:
+    - master
+
+test:
+  image: ibmcom/swift-ubuntu:4.0.3
+  stage: test
+  script:
+    - echo "Testing $CI_PROJECT_NAME"
+    - make test
+  tags:
+    - docker
+  only:
+    - master
+  artifacts:
+    paths:
+    - .build/debug/*
