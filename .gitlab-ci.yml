@@ -7,7 +7,7 @@ stages:
   - deploy
 
 build:linux:
-  image: ibmcom/swift-ubuntu:4.0.3
+  image: ibmcom/swift-ubuntu:4.1
   stage: build
   before_script:
     # install ssh-agent
@@ -38,7 +38,7 @@ build:linux:
     - release
 
 review:
-  image: ibmcom/swift-ubuntu:4.0.3
+  image: ibmcom/swift-ubuntu:4.1
   stage: test
   script:
     - echo "Reviewing $CI_PROJECT_NAME"
@@ -50,7 +50,7 @@ review:
     - master
 
 test:
-  image: ibmcom/swift-ubuntu:4.0.3
+  image: ibmcom/swift-ubuntu:4.1
   stage: test
   script:
     - echo "Testing $CI_PROJECT_NAME"

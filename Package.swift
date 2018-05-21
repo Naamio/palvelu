@@ -10,13 +10,12 @@ let package = Package(
             targets: ["Palvelu"]),
     ],
     dependencies: [
+        .package(url: "https://github.com/apple/swift-nio", .upToNextMajor(from: "1.7.0")),
+        .package(url: "https://github.com/IBM-Swift/Kitura", .upToNextMajor(from: "2.3.0")),
     ],
     targets: [
         .target(
             name: "Palvelu",
-            dependencies: []),
-        .testTarget(
-            name: "PalveluTests",
-            dependencies: ["Palvelu"]),
+            dependencies: ["Kitura", "NIO"]),
     ]
 )
