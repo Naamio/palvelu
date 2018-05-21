@@ -6,6 +6,10 @@ open class ServiceRunner: ServiceRunnable {
 
     private var router: Router?
 
+    open init() {
+        
+    }
+
     open func addRouter(_ router: Router) {
         self.router = router
     }
