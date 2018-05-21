@@ -1,5 +1,7 @@
 import Foundation
 
+import PalveluData
+
 /// Protocol to be implemented by outgoing response object.
 public protocol ServiceResponse {
     /// Send this data into stream and respond with the given

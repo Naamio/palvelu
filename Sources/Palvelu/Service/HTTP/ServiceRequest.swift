@@ -1,5 +1,7 @@
 import Foundation
 
+import PalveluData
+
 /// Protocol to be implemented by incoming request object.
 public protocol ServiceRequest {
     /// Get the value for the given key from the header (if it exists).

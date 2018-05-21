@@ -7,7 +7,7 @@ let package = Package(
     products: [
         .library(
             name: "Palvelu",
-            targets: ["Palvelu"]),
+            targets: ["PalveluService"]),
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-nio", .upToNextMajor(from: "1.7.0")),
@@ -15,7 +15,22 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "Palvelu",
-            dependencies: ["Kitura", "NIO"]),
+            name: "PalveluService",
+            dependencies: ["PalveluData", "Kitura", "NIO"],
+            path: "Sources/Palvelu/Service",
+            sources: ["."]
+        ),
+        .target(
+            name: "PalveluData",
+            dependencies: [],
+            path: "Sources/Palvelu/Data",
+            sources: ["."]
+        ),
+        .testTarget(
+            name: "PalveluDataTests",
+            dependencies: ["PalveluData"],
+            path: "Tests/PalveluTests/Data",
+            sources: ["."]
+        )
     ]
 )

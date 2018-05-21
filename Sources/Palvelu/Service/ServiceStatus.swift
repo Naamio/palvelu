@@ -1,3 +1,4 @@
+import PalveluData
 
 /// Status of the service response (success or failure).
 public enum ServiceStatus: String, Mappable {
