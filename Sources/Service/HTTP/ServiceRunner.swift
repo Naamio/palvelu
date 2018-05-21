@@ -6,11 +6,11 @@ open class ServiceRunner: ServiceRunnable {
 
     private var router: Router?
 
-    public func addRouter(_ router: Router) {
+    open func addRouter(_ router: Router) {
         self.router = router
     }
 
-    public func run(withPort port: Int) throws {
+    open func run(withPort port: Int) throws {
         
         guard let router = router else {
             throw ServiceRunnerError.noAvailableRouter
@@ -26,7 +26,7 @@ open class ServiceRunner: ServiceRunnable {
         }
     }
 
-    public func stop() {
+    open func stop() {
         Kitura.stop()
     }
 }
