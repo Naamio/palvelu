@@ -1,6 +1,6 @@
 import Kitura
 
-public class ServiceRunner: ServiceRunnable {
+open class ServiceRunner: ServiceRunnable {
 
     public var mode: RunMode = .production
 
