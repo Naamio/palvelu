@@ -2,8 +2,6 @@ import Kitura
 
 open class ServiceRunner: ServiceRunnable {
 
-    public var mode: RunMode = .production
-
     private var router: Router?
 
     public init() {
@@ -15,22 +13,25 @@ open class ServiceRunner: ServiceRunnable {
     }
 
     open func run(withPort port: Int) throws {
-        
         guard let router = router else {
             throw ServiceRunnerError.noAvailableRouter
         }
 
         Kitura.addHTTPServer(onPort: port, with: router)
-
-        if mode == .test {
-            Kitura.start()
-        } else {
-            // start the framework - the servers added until now will start listening
-            Kitura.run()
-        }
+        // start the framework - the servers added until now will start listening
+        Kitura.run()
     }
 
     open func stop() {
         Kitura.stop()
+    }
+
+    public func test(withPort port: Int) throws {
+        guard let router = router else {
+            throw ServiceRunnerError.noAvailableRouter
+        }
+
+        Kitura.addHTTPServer(onPort: port, with: router)
+        Kitura.start()
     }
 }
