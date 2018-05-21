@@ -2,6 +2,18 @@
 
 import PackageDescription
 
+private func getTargetPath(_ name: String, for type: String) -> String {
+    return "\(type)/\(name)"
+}
+
+private func getSourcePath(_ name: String) -> String {
+    return getTargetPath(name, for: "Sources")
+}
+
+private func getTestPath(_ name: String) -> String {
+    return getTargetPath(name, for: "Tests")
+}
+
 let package = Package(
     name: "Palvelu",
     products: [
@@ -17,19 +29,19 @@ let package = Package(
         .target(
             name: "PalveluService",
             dependencies: ["PalveluData", "Kitura", "NIO"],
-            path: "Sources/Palvelu/Service",
+            path: getSourcePath("Service"),
             sources: ["."]
         ),
         .target(
             name: "PalveluData",
             dependencies: [],
-            path: "Sources/Palvelu/Data",
+            path: getSourcePath("Data"),
             sources: ["."]
         ),
         .testTarget(
             name: "PalveluDataTests",
             dependencies: ["PalveluData"],
-            path: "Tests/PalveluTests/Data",
+            path: getTestPath("Data"),
             sources: ["."]
         )
     ]
