@@ -1,6 +1,6 @@
 import Kitura 
 
-open protocol ServiceRunnable {
+public protocol ServiceRunnable {
 
     /// Mode at which the server is running. Useful for 
     /// development purposes as the server can be used as
