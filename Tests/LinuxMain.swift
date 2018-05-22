@@ -1,7 +1,8 @@
 import XCTest
 
-import PalveluTests
+@testable import PalveluDataTests
 
-var tests = [XCTestCaseEntry]()
-tests += PalveluTests.allTests()
-XCTMain(tests)
+XCTMain([
+    testCase(TestArraySet.allTests),
+    testCase(TestCache.allTests),
+])
