@@ -3,10 +3,10 @@ clean:
 		rm -rf .build ; \
 	fi
 
-build: clean
+build:
 	swift build
 
-test: build
+test:
 	swift test
 
 build-release: clean
